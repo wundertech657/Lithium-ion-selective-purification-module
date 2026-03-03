@@ -1,1 +1,25 @@
+March 1, 2026.
+Today is the day I worked on the water pump project. I started building this project by first wiring up the temperature sensor to pin 5 of my ESP32. Pin 5 is an analog input. I then connected the pump switch to pin 7. Pin 7 is a digital output. After that, I connected a momentary switch to pin 13 and ground. This was done to make a latching circuit.
+I wrote the code in C++ for the ESP32-WROOM. I chose a baud rate of 115200 for the serial monitor. I added a debounce delay of 50 milliseconds to ensure the switch functioned correctly. The code reads the analog voltage from the temperature sensor, converts it to Celsius, and prints the value every two seconds. It also toggles the pump state when the button is pressed.
+The project is now functional. The sensor reads the temperature. The button turns the pump on and off. The serial monitor displays the data as intended. 
+
+
+
+The code: 
+
+const int sensorPin = 5;
+const int pumpPin   = 7;
+const int buttonPin = 13; 
+
+bool pumpState = false;      
+bool lastButtonState = HIGH; 
+unsigned long lastDebounceTime = 0;
+const unsigned long debounceDelay = 50; 
+
+void setup() { 
+  Serial.begin(115200);
+
+  pinMode(pumpPin, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP); 
+  digitalWrite(pumpPin, LOW);
 
